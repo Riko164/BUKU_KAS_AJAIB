@@ -24,10 +24,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author Shikimime
- */
+
 public class Register implements Initializable{
 
     @FXML
