@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<Pane  maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml" fx:controller="Controller.Home" >
+   <children>
+      <ImageView fitHeight="400.0" fitWidth="600.0">
+         <image>
+            <Image url="@../Image/Home/bg@2xhome.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="248.0" fitWidth="352.0" layoutX="231.0" layoutY="141.0" pickOnBounds="true">
+         <image>
+            <Image url="@../Image/Home/bg@2xhome.png" />
+         </image>
+      </ImageView>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#60b0fa" height="400.0" stroke="#7c7aba" strokeType="INSIDE" width="215.0" />
+      <ImageView fitHeight="106.0" fitWidth="104.0" layoutX="48.0" layoutY="8.0">
+         <image>
+            <Image url="@../Image/Home/icon_nopic.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="8.0" layoutY="172.0" lineSpacing="5.0" prefHeight="17.0" prefWidth="134.0" text="Pemasukan">
+         <font>
+            <Font name="Comic Sans MS" size="21.0" />
+         </font>
+      </Label>
+      <Label layoutX="8.0" layoutY="201.0" lineSpacing="5.0"  prefHeight="17.0" prefWidth="134.0" text="Pengeluaran">
+         <font>
+            <Font name="Comic Sans MS" size="21.0" />
+         </font>
+      </Label>
+      <Label layoutX="8.0" layoutY="230.0" lineSpacing="5.0"  prefHeight="29.0" prefWidth="199.0" text="Laporan Keuangan">
+         <font>
+            <Font name="Comic Sans MS" size="21.0" />
+         </font>
+      </Label>
+      <Label layoutX="7.0" layoutY="259.0" lineSpacing="5.0"  prefHeight="29.0" prefWidth="192.0" text="Ekspor Laporan">
+         <font>
+            <Font name="Comic Sans MS" size="21.0" />
+         </font>
+      </Label>
+      <Label layoutX="8.0" layoutY="287.0" lineSpacing="5.0"  prefHeight="17.0" prefWidth="134.0" text="Pengaturan">
+         <font>
+            <Font name="Comic Sans MS" size="21.0" />
+         </font>
+      </Label>
+      <Label layoutX="6.0" layoutY="316.0" lineSpacing="5.0"  prefHeight="17.0" prefWidth="134.0" text="Tentang">
+         <font>
+            <Font name="Comic Sans MS" size="21.0" />
+         </font>
+      </Label>
+      <Label layoutX="8.0" layoutY="343.0" lineSpacing="5.0"  prefHeight="17.0" prefWidth="134.0" text="Keluar" onMousePressed="#Logout"  fx:id="logout" >
+         <font>
+            <Font name="Comic Sans MS" size="21.0" />
+         </font>
+      </Label>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#60b0fa" height="130.0" layoutX="215.0" stroke="#1d78cd" strokeType="INSIDE" width="386.0" />
+      <ImageView fitHeight="38.0" fitWidth="38.0" layoutX="545.0" layoutY="14.0" >
+         <image>
+            <Image url="@../Image/Home/home-icon-silhouette.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="231.0" layoutY="82.0" text="APLIKASI PENCATATAN KEUANGAN">
+         <font>
+            <Font name="Comic Sans MS Bold" size="19.0" />
+         </font>
+      </Label>
+      <Label layoutX="311.0" layoutY="37.0" text="BUKU KAS AJAIB">
+         <font>
+            <Font name="Comic Sans MS Bold" size="19.0" />
+         </font>
+      </Label>
+      <Label layoutX="57.0" layoutY="117.0" text="[Username]" wrapText="true" fx:id="usernametxt">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+      <Label layoutX="259.0" layoutY="183.0" prefHeight="38.0" prefWidth="104.0" text="Nama : ">
+         <font>
+            <Font name="Comic Sans MS" size="27.0" />
+         </font>
+      </Label>
+      <Label layoutX="396.0" layoutY="184.0"  text="[Nama]" wrapText="true" fx:id="namatxt">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="259.0" layoutY="226.0" prefHeight="38.0" prefWidth="114.0" text="Email : ">
+         <font>
+            <Font name="Comic Sans MS" size="27.0" />
+         </font>
+      </Label>
+      <Label layoutX="396.0" layoutY="230.0"  text="[Email]" wrapText="true" fx:id="emailtxt">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="259.0" layoutY="271.0"  text="Saldo : ">
+         <font>
+            <Font name="Comic Sans MS" size="27.0" />
+         </font>
+      </Label>
+      <Label layoutX="396.0" layoutY="271.0"  text="[Saldo]" wrapText="true" fx:id="saldotxt">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+   </children>
+</Pane>
