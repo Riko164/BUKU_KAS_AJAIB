@@ -1,0 +1,19 @@
+/*
+ * Empty Stylesheet file.
+ */
+
+.bdybg {
+   -fx-background-image: url("/Image/Splash/Saving-money-not-feeling-deprived.jpg");
+   -fx-background-size: 100% 100%;
+   -fx-background-color: transparent;
+   /*-fx-opacity: 0.5;*/
+}
+.btnregister{
+    -fx-opacity: 2;
+}
+
+.btnsignin{
+    -fx-opacity: 2;
+}
+
+

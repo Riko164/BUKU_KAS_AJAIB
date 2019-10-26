@@ -1,0 +1,10 @@
+rpl\Controller\PemasukanController.class
+rpl\Controller\HomeController.class
+rpl\Controller\SuksesRegistrasiController.class
+rpl\Controller\SigninController.class
+rpl\Controller\TambahKategoriController.class
+rpl\Koneksi\konek.class
+rpl\Main\MainApp.class
+rpl\Controller\PengaturanController.class
+rpl\Controller\SplashActController.class
+rpl\Controller\RegisterController.class
