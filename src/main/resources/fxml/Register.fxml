@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="rpl.Controller.RegisterController">
+   <children>
+      <ImageView fitHeight="400.0" fitWidth="600.0" pickOnBounds="true">
+         <image>
+            <Image url="@../Image/Regis/bg@2x.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="326.0" fitWidth="361.0" layoutX="119.0" layoutY="37.0" pickOnBounds="true">
+         <image>
+            <Image url="@../Image/Regis/bg@2x.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="54.0" fitWidth="213.0" layoutX="203.0" layoutY="175.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Image/Regis/input-username@2x.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="54.0" fitWidth="201.0" layoutX="203.0" layoutY="242.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Image/Regis/input-pin@2x.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="54.0" fitWidth="193.0" layoutX="204.0" layoutY="53.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Image/Regis/input-email@2x.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="btnregis" layoutX="203.0" layoutY="310.0" mnemonicParsing="false" onAction="#Regis" prefHeight="32.0" prefWidth="193.0" style="-fx-background-color: #203DD1;" text="REGISTER" textFill="WHITE">
+         <font>
+            <Font name="Marlett" size="12.0" />
+         </font>
+      </Button>
+      <TextField fx:id="emailtxt" layoutX="204.0" layoutY="75.0" prefHeight="32.0" prefWidth="193.0" />
+      <TextField fx:id="usernametxt" layoutX="204.0" layoutY="194.0" prefHeight="38.0" prefWidth="193.0" />
+      <PasswordField fx:id="passtxt" layoutX="204.0" layoutY="264.0" prefHeight="32.0" prefWidth="193.0" onKeyReleased="#maxpass" />
+      <ImageView fitHeight="54.0" fitWidth="193.0" layoutX="204.0" layoutY="114.0" pickOnBounds="true">
+         <image>
+            <Image url="@../Image/Regis/input-pin@2x.png" />
+         </image>
+      </ImageView>
+      <TextField fx:id="namatxt" layoutX="204.0" layoutY="134.0" prefHeight="32.0" prefWidth="193.0" />
+   </children>
+</Pane>
