@@ -99,7 +99,7 @@ public class PengeluaranController implements Initializable {
     }
     
     public void MouseoutPengeluaran(){
-        Pengeluaran.setTextFill(Color.web("#000000"));
+     
     }
     public void MouseinLaporan(){
         Laporan.setTextFill(Color.web("#FFF"));
@@ -237,7 +237,7 @@ public class PengeluaranController implements Initializable {
         st = conn.createStatement();
         rs = st.executeQuery(sqlKategori);
         
-        String sql = "INSERT INTO Transaksi (id_kategori,Jumlah,Tanggal,Jenis,keterangan,username) VALUES "
+        String sql = "INSERT INTO Transakasi (id_kategori,Jumlah,Tanggal,Jenis,keterangan,username) VALUES "
                 + "('"+rs.getString("id")+"','"+this.jumlahtxt.getText()+"','"+this.tanggaldate.getValue().toString()+"','PENGELUARAN','"+this.judultxt.getText()+"','"+this.usernametxt.getText()+"')";
         st.executeUpdate(sql);
         //cuk, database mu tambahain kolom username

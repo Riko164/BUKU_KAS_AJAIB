@@ -33,7 +33,7 @@ import rpl.Koneksi.konek;
 /**
  * FXML Controller class
  *
- * @author Shikimime
+ * @author Wildan Kristian
  */
 public class PemasukanController implements Initializable {
 
@@ -92,12 +92,12 @@ public class PemasukanController implements Initializable {
     }
     
     public void MouseinPemasukan(){
-        Pemasukan.setTextFill(Color.web("#FFF"));
+  
         Pemasukan.setCursor(Cursor.HAND);
     }
     
     public void MouseoutPemasukan(){
-        Pemasukan.setTextFill(Color.web("#000000"));
+      
     }
     public void MouseinPengeluaran(){
         Pengeluaran.setTextFill(Color.web("#FFF"));

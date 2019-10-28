@@ -31,7 +31,7 @@ import rpl.Koneksi.konek;
 /**
  * FXML Controller class
  *
- * @author Shikimime
+ * @author Wildan Kristian
  */
 public class TambahKategoriController implements Initializable {
 
