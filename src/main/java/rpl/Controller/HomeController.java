@@ -273,7 +273,7 @@ public class HomeController implements Initializable {
         
         conn = konek.conDB();
         st = conn.createStatement();
-        rs = st.executeQuery("SELECT NamaKategori FROM kategori WHERE Jenis = 'PENGELUARAN'");
+        rs = st.executeQuery("SELECT NamaKategori FROM kategori WHERE Jenis = 'PENGELUARAN' and id_user=(select iduser from user where username='"+this.usernametxt.getText()+"')");
         while(rs.next()){
             hm.isiComboBox(rs.getString("NamaKategori"));
         }
