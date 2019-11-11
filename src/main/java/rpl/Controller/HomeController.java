@@ -23,7 +23,12 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javax.swing.JOptionPane;
-import rpl.Koneksi.konek;
+import Koneksi.konek;
+import java.io.File;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
+import javafx.stage.DirectoryChooser;
 
 /**
  * FXML Controller class
@@ -45,14 +50,28 @@ public class HomeController implements Initializable {
     private Label saldotxt;
     
     @FXML
-    private Label logout,Pengaturan,Pemasukan,Pengeluaran,Laporan,Ekspor,Tentang;
+    private Label logout,Pengaturan,Pemasukan,Pengeluaran,Laporan,Ekspor,Tentang,awallbl,akhirlbl,kategorilbl;
     
     @FXML
     private ImageView HomeImg;
     
+    @FXML
+    private Button locationbtn;
+    
+    @FXML
+    private ComboBox pilihbox,kategoribox;
+    
+    @FXML
+    private DatePicker awaldate,akhirdate;
+    
     Connection conn;
     ResultSet rs;
     Statement st;
+    private int saldosim;
+    
+    
+    
+
     
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -72,7 +91,31 @@ public class HomeController implements Initializable {
     }
 
     public void setSaldotxt(String saldotxt) {
-        this.saldotxt.setText(saldotxt);
+        String nilai="";
+        this.saldosim=Integer.valueOf(saldotxt);
+        
+        if(saldotxt.length()>=4){
+            int size=saldotxt.length()%3;
+            if(size==0){
+                size=3;
+            }
+//            System.out.println(saldotxt.charAt(0));
+        for(int i=0;i<saldotxt.length();i++){
+                if(i==size && i!=0){
+                    System.out.println(i);
+                    nilai+='.';
+                    nilai+=saldotxt.charAt(i);
+                    size+=3;
+                }else{
+                    nilai+=saldotxt.charAt(i);
+                }
+                
+            
+        }
+        }else{
+            nilai=saldotxt;
+        }
+        this.saldotxt.setText("Rp. "+nilai+",00");
     }
   
    
@@ -158,6 +201,27 @@ public class HomeController implements Initializable {
         }
         }
         
+    }
+    
+    public void gotoekspor(){
+         Stage stage = (Stage) logout.getScene().getWindow();
+        stage.close();
+        
+        try{
+        FXMLLoader loader=new FXMLLoader(getClass().getResource("/fxml/GrafikLaporan.fxml"));
+        Parent root= (Parent) loader.load();
+//                  
+        GrafikLaporanController hm=loader.getController();
+        hm.setUsernametxt(this.usernametxt.getText());
+        
+        stage.setScene(new Scene(root));
+        stage.setTitle("Home");
+        stage.setResizable(true);
+        stage.show();
+        }catch(Exception e){
+            e.printStackTrace();
+            System.out.println("salah disini gan");
+        }
     }
     
     public void PengaturanMenu(){
@@ -270,7 +334,7 @@ public class HomeController implements Initializable {
 //                  
         PengeluaranController hm=loader.getController();
         hm.setUsernametxt(this.usernametxt.getText());
-        
+        hm.setSaldo(this.saldosim);
         conn = konek.conDB();
         st = conn.createStatement();
         rs = st.executeQuery("SELECT NamaKategori FROM kategori WHERE Jenis = 'PENGELUARAN' and id_user=(select iduser from user where username='"+this.usernametxt.getText()+"')");
@@ -295,4 +359,47 @@ public class HomeController implements Initializable {
         }
     }
     
+
+    
+    public void LaporanKeuangan(){
+        try{
+        Stage stage = (Stage) this.Laporan.getScene().getWindow();
+                stage.close();
+                
+                 FXMLLoader loader=new FXMLLoader(getClass().getResource("/fxml/TampilkanLaporan.fxml"));
+                 Parent root= (Parent) loader.load();
+               
+                 TampilkanLaporanController hm=loader.getController();
+                 
+                 hm.setUsernametxt(this.usernametxt.getText());
+                       
+                 stage.setScene(new Scene(root));
+                 stage.setTitle("Home");
+                 stage.setResizable(true);
+                 stage.show();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        }
+    
+    public void gotoabout(){
+         try{
+        Stage stage = (Stage) this.Tentang.getScene().getWindow();
+                stage.close();
+                
+                 FXMLLoader loader=new FXMLLoader(getClass().getResource("/fxml/About.fxml"));
+                 Parent root= (Parent) loader.load();
+               
+                 AboutController hm=loader.getController();
+                 
+                 hm.setUsernametxt(this.usernametxt.getText());
+                       
+                 stage.setScene(new Scene(root));
+                 stage.setTitle("Home");
+                 stage.setResizable(true);
+                 stage.show();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
 }
