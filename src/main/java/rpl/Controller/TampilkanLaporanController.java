@@ -634,7 +634,7 @@ public class TampilkanLaporanController implements Initializable {
             if (this.pilihtransbox.getValue().toString().equals("ALL PEMASUKAN")) {
 
 //            System.out.println("select * from transakasi inner join kategori where transakasi.jenis='PEMASUKAN' and transakasi.keterangan like '%"+this.searchtxt.getText()+"%'");
-                rs = st.executeQuery("select * from transakasi inner join kategori on kategori.id=transakasi.id_kategori where transakasi.jenis='PEMASUKAN' and transakasi.keterangan like '%" + this.searchtxt.getText() + "%' and transakasi.username='" + this.usernametxt.getText() + "'");
+                rs = st.executeQuery("select * from transakasi inner join kategori on kategori.id=transakasi.id_kategori where transakasi.jenis='PEMASUKAN' and transakasi.keterangan like '%" + this.searchtxt.getText().replaceAll("'", "") + "%' and transakasi.username='" + this.usernametxt.getText() + "'");
 
                 ObservableList<Tabel> isi = FXCollections.observableArrayList();
                 int i = 0;
@@ -651,7 +651,7 @@ public class TampilkanLaporanController implements Initializable {
                 }
                 this.tabelisi.setItems(isi);
             } else if (this.pilihtransbox.getValue().toString().equals("ALL PENGELUARAN")) {
-                rs = st.executeQuery("select * from transakasi inner join kategori on kategori.id=transakasi.id_kategori where transakasi.jenis='PENGELUARAN' and transakasi.keterangan like '%" + this.searchtxt.getText() + "%' and transakasi.username='" + this.usernametxt.getText() + "'");
+                rs = st.executeQuery("select * from transakasi inner join kategori on kategori.id=transakasi.id_kategori where transakasi.jenis='PENGELUARAN' and transakasi.keterangan like '%" + this.searchtxt.getText().replaceAll("'", "") + "%' and transakasi.username='" + this.usernametxt.getText() + "'");
 
                 ObservableList<Tabel> isi = FXCollections.observableArrayList();
                 int i = 0;
