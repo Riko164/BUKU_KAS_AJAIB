@@ -28,7 +28,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javax.swing.JOptionPane;
-import rpl.Koneksi.konek;
+import Koneksi.konek;
 
 /**
  * FXML Controller class
@@ -60,6 +60,8 @@ public class PemasukanController implements Initializable {
     Connection conn;
     ResultSet rs;
     Statement st;
+    
+    String temp;
     
     @FXML
     private TextField Jumlahtxt,Judultxt;
@@ -319,8 +321,40 @@ public class PemasukanController implements Initializable {
     }
     
     public void setJumlahRP(){
-        System.out.println(this.Jumlahtxt.getText());
-        jumlahrp.setText("Rp. " + this.Jumlahtxt.getText()+",00" );
+        try{
+            Integer.valueOf(this.Jumlahtxt.getText());
+             String nilai = "";
+            if (this.Jumlahtxt.getText().length() >= 4) {
+                int size = this.Jumlahtxt.getText().length() % 3;
+                
+                if (size == 0) {
+                    size = 3;
+                }
+                
+                System.out.println(this.Jumlahtxt.getText().charAt(0));
+                
+                for (int i = 0; i < this.Jumlahtxt.getText().length(); i++) {
+                    if (i == size && i != 0) {
+                        System.out.println(i);
+                        nilai += '.';
+                        nilai += this.Jumlahtxt.getText().toString().charAt(i);
+                        size += 3;
+                    } else {
+                        nilai += this.Jumlahtxt.getText().toString().charAt(i);
+                    }
+
+                }
+            } else {
+                nilai = this.Jumlahtxt.getText();
+            }
+            System.out.println(nilai);
+            this.temp=this.Jumlahtxt.getText();
+            this.jumlahrp.setText("Rp. " + nilai + ",00");
+        }catch(Exception e){
+            this.Jumlahtxt.setText(temp);
+            e.printStackTrace();
+        }
+        
     }
     
      public void Pemasukan(){
