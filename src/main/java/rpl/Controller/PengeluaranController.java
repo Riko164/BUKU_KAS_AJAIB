@@ -27,7 +27,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javax.swing.JOptionPane;
-import rpl.Koneksi.konek;
+import Koneksi.konek;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 
 /**
  * FXML Controller class
@@ -63,6 +65,12 @@ public class PengeluaranController implements Initializable {
     @FXML
     private DatePicker tanggaldate;
     
+    private int saldo;
+    private String temp;
+    public void setSaldo(int jumlah){
+        this.saldo=jumlah;
+        
+    }
     
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -173,7 +181,7 @@ public class PengeluaranController implements Initializable {
             st = conn.createStatement();
             System.out.println("sampe sini");
        
-                JOptionPane.showMessageDialog(null, "berhasil insert");
+                message("berhasil input");
                 
                 Node node = (Node) ae.getSource();
                 Stage stage = (Stage) node.getScene().getWindow();
@@ -236,12 +244,12 @@ public class PengeluaranController implements Initializable {
         String sqlKategori = "SELECT id FROM Kategori WHERE NamaKategori = '"+kategoribox.getValue()+"'";
         st = conn.createStatement();
         rs = st.executeQuery(sqlKategori);
-        
+        if(this.saldo>=Integer.valueOf(this.jumlahtxt.getText())){
         String sql = "INSERT INTO Transakasi (id_kategori,Jumlah,Tanggal,Jenis,keterangan,username) VALUES "
                 + "('"+rs.getString("id")+"','"+this.jumlahtxt.getText()+"','"+this.tanggaldate.getValue().toString()+"','PENGELUARAN','"+this.judultxt.getText()+"','"+this.usernametxt.getText()+"')";
         st.executeUpdate(sql);
         //cuk, database mu tambahain kolom username
-        JOptionPane.showMessageDialog(null,"Berhasil Menyimpan di Database");
+        message("Berhasil Menyimpan di Database");
 //        conn.close();
 //        st.close();
 //        rs.close();
@@ -249,7 +257,9 @@ public class PengeluaranController implements Initializable {
 //        st = conn.createStatement();
         st.executeUpdate("UPDATE user SET saldo = saldo-'"+this.jumlahtxt.getText()+"' WHERE username = '"+this.usernametxt.getText()+"' ");
         kembali(ae);
-        
+        }else{
+            message("input lebih dari saldo");
+        }
         }catch(Exception e){
             e.printStackTrace();
         }finally{
@@ -268,10 +278,48 @@ public class PengeluaranController implements Initializable {
     }
     
     public void setJumlahRP(){
-        System.out.println(this.jumlahtxt.getText());
-        showjumlahtxt.setText("Rp. " + this.jumlahtxt.getText()+ ",00");
+        if(!this.jumlahtxt.getText().equals("")){
+            
+        
+        try {
+            Integer.valueOf(this.jumlahtxt.getText());
+            String nilai = "";
+            if (this.jumlahtxt.getText().length() >= 4) {
+                int size = this.jumlahtxt.getText().length() % 3;
+                
+                if (size == 0) {
+                    size = 3;
+                }
+                
+                System.out.println(this.jumlahtxt.getText().charAt(0));
+                
+                for (int i = 0; i < this.jumlahtxt.getText().length(); i++) {
+                    if (i == size && i != 0) {
+                        System.out.println(i);
+                        nilai += '.';
+                        nilai += this.jumlahtxt.getText().toString().charAt(i);
+                        size += 3;
+                    } else {
+                        nilai += this.jumlahtxt.getText().toString().charAt(i);
+                    }
+
+                }
+            } else {
+                nilai = this.jumlahtxt.getText();
+            }
+            System.out.println(nilai);
+            this.temp=jumlahtxt.getText();
+            showjumlahtxt.setText("Rp. " + nilai + ",00");
+        } catch (Exception e) {
+            this.jumlahtxt.setText(temp);
+            message("error");
+            }
+
+        }
+        else{
+            showjumlahtxt.setText("Rp. 0,00");
+        }
     }
-    
     public void Pengeluaran(){
         Stage stage = (Stage) logout.getScene().getWindow();
         stage.close();
@@ -385,5 +433,12 @@ public class PengeluaranController implements Initializable {
                     e.printStackTrace();
                 }
             }
+    }
+    
+    public void message(String isi){
+        Alert pesan=new Alert(AlertType.INFORMATION);
+        pesan.setTitle("INFROMATION");
+        pesan.setContentText(isi);
+        pesan.showAndWait();
     }
 }
