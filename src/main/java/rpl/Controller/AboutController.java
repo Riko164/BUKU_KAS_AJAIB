@@ -5,159 +5,270 @@
  */
 package rpl.Controller;
 
+import Koneksi.konek;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ResourceBundle;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javax.swing.JOptionPane;
-import Koneksi.konek;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.ButtonType;
 
 /**
  * FXML Controller class
  *
  * @author Shikimime
  */
-public class EditUserController implements Initializable {
+public class AboutController implements Initializable {
 
-        Connection conn;
+    @FXML
+    private Label usernametxt;
+
+    @FXML
+    private Label emailtxt;
+
+    @FXML
+    private Label namatxt;
+
+    @FXML
+    private Label saldotxt;
+
+    @FXML
+    private Label logout, Pengaturan, Pemasukan, Pengeluaran, Laporan, Ekspor, Tentang, awallbl, akhirlbl, kategorilbl;
+
+    @FXML
+    private ImageView HomeImg;
+
+    @FXML
+    private Button locationbtn;
+
+    @FXML
+    private ComboBox pilihbox, kategoribox;
+
+    @FXML
+    private DatePicker awaldate, akhirdate;
+
+    Connection conn;
     ResultSet rs;
     Statement st;
+    private int saldosim;
         private int warna;
-        private int saldo;
-        
-        public void setSaldo(int saldo){
-            this.saldo=saldo;
-        }
     
     public void setWarna(int warna){
         this.warna=warna;
     }
-    
-         @FXML
-    private Label usernametxt;
 
-    
     @FXML
-    private Label logout,Pengaturan,Pemasukan,Pengeluaran,Laporan,Ekspor,Tentang,gantipinlbl,tambahlbl,gantiwarnalbl,edituserlbl;
-    
+    private Label namarikolbl, namawildanlbl, namaaryalbl, jabatanrikolbl, jabatanaryalbl, jabatanwildanlbl, qoutesrikolbl, qoutesaryalbl, qouteswildanlbl;
+
     @FXML
-    private ImageView HomeImg;
-    
-    @FXML
-    private Button simpanbtn,kembalibtn;
-    
-    
-    @FXML
-    private TextField emailchangetxt,namachangetxt;
-    
+    private ImageView fotowildanlbl, fotoriko, fotoarya, nextbtn, prevbtn;
+
+    private int giliran = 1;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        
+        this.namaaryalbl.setVisible(false);
+        this.namawildanlbl.setVisible(false);
+        this.jabatanaryalbl.setVisible(false);
+        this.jabatanwildanlbl.setVisible(false);
+        this.qoutesaryalbl.setVisible(false);
+        this.qouteswildanlbl.setVisible(false);
+        this.fotoarya.setVisible(false);
+        this.fotowildanlbl.setVisible(false);
+    }
+
+    public void Mouseinnext() {
+        this.nextbtn.setCursor(Cursor.HAND);
+    }
+
+    public void Mouseinback() {
+        this.prevbtn.setCursor(Cursor.HAND);
+    }
+
+    public void nextprofil() {
+        if (giliran == 3) {
+            giliran = 1;
+        } else {
+            giliran++;
+        }
+        setItemshow();
+    }
+
+    public void prevprofil() {
+        if (giliran == 1) {
+            giliran = 3;
+        } else {
+            giliran--;
+        }
+        setItemshow();
+    }
+
+    public void setItemshow() {
+        if (giliran == 1) {
+            this.namaaryalbl.setVisible(false);
+            this.namawildanlbl.setVisible(false);
+            this.jabatanaryalbl.setVisible(false);
+            this.jabatanwildanlbl.setVisible(false);
+            this.qoutesaryalbl.setVisible(false);
+            this.qouteswildanlbl.setVisible(false);
+            this.fotoarya.setVisible(false);
+            this.fotowildanlbl.setVisible(false);
+            this.namarikolbl.setVisible(true);
+            this.fotoriko.setVisible(true);
+            this.jabatanrikolbl.setVisible(true);
+            this.qoutesrikolbl.setVisible(true);
+        } else if (giliran == 2) {
+            this.namaaryalbl.setVisible(true);
+            this.jabatanaryalbl.setVisible(true);
+            this.fotoarya.setVisible(true);
+            this.qoutesaryalbl.setVisible(true);
+            this.namarikolbl.setVisible(false);
+            this.jabatanrikolbl.setVisible(false);
+            this.fotoriko.setVisible(false);
+            this.qoutesrikolbl.setVisible(false);
+            this.namawildanlbl.setVisible(false);
+            this.jabatanwildanlbl.setVisible(false);
+            this.fotowildanlbl.setVisible(false);
+            this.qouteswildanlbl.setVisible(false);
+        } else {
+            this.namaaryalbl.setVisible(false);
+            this.jabatanaryalbl.setVisible(false);
+            this.fotoarya.setVisible(false);
+            this.qoutesaryalbl.setVisible(false);
+            this.namarikolbl.setVisible(false);
+            this.jabatanrikolbl.setVisible(false);
+            this.fotoriko.setVisible(false);
+            this.qoutesrikolbl.setVisible(false);
+            this.namawildanlbl.setVisible(true);
+            this.jabatanwildanlbl.setVisible(true);
+            this.fotowildanlbl.setVisible(true);
+            this.qouteswildanlbl.setVisible(true);
+        }
+
     }
 
     public void setUsernametxt(String usernametxt) {
         this.usernametxt.setText(usernametxt);
-        try{
-            Connection conn=konek.conDB();
-            Statement st=conn.createStatement();
-            ResultSet rs=st.executeQuery("select * from user where username=\""+usernametxt+"\"");
-            this.emailchangetxt.setText(rs.getString("email"));
-            this.namachangetxt.setText(rs.getString("nama_lengkap"));
-            conn.close();
-            st.close();
-            rs.close();
-            
-            
-        }catch(Exception e){
-            e.printStackTrace();
-        }
     }
 
-    
-  
-   
-    public void Mousein(){
+    public void setEmailtxt(String emailtxt) {
+        this.emailtxt.setText(emailtxt);
+    }
+
+    public void setNamatxt(String namatxt) {
+        this.namatxt.setText(namatxt);
+    }
+
+    public void setSaldotxt(String saldotxt) {
+        String nilai = "";
+        this.saldosim = Integer.valueOf(saldotxt);
+
+        if (saldotxt.length() >= 4) {
+            int size = saldotxt.length() % 3;
+            if (size == 0) {
+                size = 3;
+            }
+//            System.out.println(saldotxt.charAt(0));
+            for (int i = 0; i < saldotxt.length(); i++) {
+                if (i == size && i != 0) {
+                    System.out.println(i);
+                    nilai += '.';
+                    nilai += saldotxt.charAt(i);
+                    size += 3;
+                } else {
+                    nilai += saldotxt.charAt(i);
+                }
+
+            }
+        } else {
+            nilai = saldotxt;
+        }
+        this.saldotxt.setText("Rp. " + nilai + ",00");
+    }
+
+    public void Mousein() {
         logout.setTextFill(Color.web("#FFF"));
         logout.setCursor(Cursor.HAND);
     }
-    
-    public void Mouseout(){
+
+    public void Mouseout() {
         logout.setTextFill(Color.web("#000000"));
     }
-    
-    public void MouseinPemasukan(){
+
+    public void MouseinPemasukan() {
         Pemasukan.setTextFill(Color.web("#FFF"));
         Pemasukan.setCursor(Cursor.HAND);
     }
-    
-    public void MouseoutPemasukan(){
+
+    public void MouseoutPemasukan() {
         Pemasukan.setTextFill(Color.web("#000000"));
     }
-    public void MouseinPengeluaran(){
+
+    public void MouseinPengeluaran() {
         Pengeluaran.setTextFill(Color.web("#FFF"));
         Pengeluaran.setCursor(Cursor.HAND);
     }
-    
-    public void MouseoutPengeluaran(){
+
+    public void MouseoutPengeluaran() {
         Pengeluaran.setTextFill(Color.web("#000000"));
     }
-    public void MouseinLaporan(){
+
+    public void MouseinLaporan() {
         Laporan.setTextFill(Color.web("#FFF"));
         Laporan.setCursor(Cursor.HAND);
     }
-    
-    public void MouseoutLaporan(){
+
+    public void MouseoutLaporan() {
         Laporan.setTextFill(Color.web("#000000"));
     }
-    
-    public void MouseinEkspor(){
+
+    public void MouseinEkspor() {
         Ekspor.setTextFill(Color.web("#FFF"));
         Ekspor.setCursor(Cursor.HAND);
     }
-    
-    public void MouseoutEkspor(){
+
+    public void MouseoutEkspor() {
         Ekspor.setTextFill(Color.web("#000000"));
     }
-    public void MouseinPengaturan(){
+
+    public void MouseinPengaturan() {
         Pengaturan.setTextFill(Color.web("#FFF"));
         Pengaturan.setCursor(Cursor.HAND);
     }
-    
-    public void MouseoutPengaturan(){
+
+    public void MouseoutPengaturan() {
         Pengaturan.setTextFill(Color.web("#000000"));
     }
-    public void MouseinTentang(){
+
+    public void MouseinTentang() {
         Tentang.setTextFill(Color.web("#FFF"));
         Tentang.setCursor(Cursor.HAND);
     }
-    
-    public void MouseoutTentang(){
+
+    public void MouseoutTentang() {
         Tentang.setTextFill(Color.web("#000000"));
     }
-    
-    public void MouseinHome(){
+
+    public void MouseinHome() {
         HomeImg.setCursor(Cursor.HAND);
     }
-    
-         @FXML
+
+       @FXML
     private void Logout() {
 
         Alert keluar = new Alert(Alert.AlertType.CONFIRMATION);
@@ -340,7 +451,7 @@ public class EditUserController implements Initializable {
 //                  
             PengeluaranController hm = loader.getController();
             hm.setUsernametxt(this.usernametxt.getText());
-            hm.setSaldo(this.saldo);
+            hm.setSaldo(this.saldosim);
             conn = konek.conDB();
             st = conn.createStatement();
             rs = st.executeQuery("SELECT NamaKategori FROM kategori WHERE Jenis = 'PENGELUARAN' and id_user=(select iduser from user where username='" + this.usernametxt.getText() + "')");
@@ -428,81 +539,5 @@ public class EditUserController implements Initializable {
             e.printStackTrace();
         }
     }
-    public void Mouseinbutton(){
-        simpanbtn.setCursor(Cursor.HAND);
-        kembalibtn.setCursor(Cursor.HAND);
-    }
-    
 
-    public void message(String isi){
-        Alert pesan=new Alert(AlertType.INFORMATION);
-        pesan.setTitle("NOTIFICATION");
-        pesan.setContentText(isi);
-        pesan.showAndWait();
-        
-    }
-    public void simpan(ActionEvent ae){
-        String email = emailchangetxt.getText();
-        String nama = namachangetxt.getText();
-        
-        try{
-        conn=konek.conDB();
-        st=conn.createStatement();
-        int i=st.executeUpdate("Update user set nama_lengkap=\""+nama+"\",email=\""+email+"\" where username=\""+this.usernametxt.getText()+"\"");
-            System.out.println("Update user set nama_lengkap=\""+nama+"\" and email=\""+email+"\" where username=\""+this.usernametxt.getText()+"\"");
-
-            message("berhasil update");
-
-        
-        
-        
-        
-        
-                
-            
-        
-        }catch(Exception e){
-            e.printStackTrace();
-            message("gagal update");
-        }finally{
-            try{
-            conn.close();
-            st.close();
-            }catch(Exception e){
-                e.printStackTrace();
-            }
-        }
-        
-        Stage stage= (Stage) simpanbtn.getScene().getWindow();
-    }
-    
-     public void kembali(ActionEvent ae){
-        Stage stage = (Stage) kembalibtn.getScene().getWindow();
-        stage.close();
-        
-        try{
-        FXMLLoader loader=new FXMLLoader(getClass().getResource("/fxml/Pengaturan.fxml"));
-        Parent root= (Parent) loader.load();
-//                  
-        PengaturanController hm=loader.getController();
-        hm.setWarna(warna);
-//        hm.setEmailtxt(emailtxt.getText());
-//        hm.setNamatxt(namatxt.getText());
-//        hm.setSaldotxt(saldotxt.getText());
-        hm.setUsernametxt(usernametxt.getText());
-        Scene scene=new Scene(root);
-        if(warna==1){
-            scene.getStylesheets().add("/styles/biru.css");
-        }else{
-            scene.getStylesheets().add("/styles/hijau.css");
-        }
-        stage.setScene(scene);
-        stage.setTitle("Home");
-        stage.setResizable(true);
-        stage.show();
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-    }
-   
 }

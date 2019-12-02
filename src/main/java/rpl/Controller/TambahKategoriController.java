@@ -15,11 +15,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
@@ -27,46 +28,50 @@ import javafx.stage.Stage;
 import javax.swing.JOptionPane;
 import Koneksi.konek;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 
 /**
  * FXML Controller class
  *
- * @author Shikimime
+ * @author Wildan Kristian
  */
-public class EditUserController implements Initializable {
+public class TambahKategoriController implements Initializable {
 
-        Connection conn;
+    /**
+     * Initializes the controller class.
+     */
+    
+     @FXML
+    private Label usernametxt;
+
+    
+    @FXML
+    private Label logout,Pengaturan,Pemasukan,Pengeluaran,Laporan,Ekspor,Tentang;
+    
+    @FXML
+    private ImageView HomeImg;
+    
+    @FXML
+    private Button tambahbtn,kembalibtn;
+    
+    @FXML
+    private ComboBox ComboPilih;
+    
+    Connection conn;
     ResultSet rs;
     Statement st;
         private int warna;
-        private int saldo;
-        
+        private int saldosim;
         public void setSaldo(int saldo){
-            this.saldo=saldo;
+            this.saldosim=saldo;
         }
     
     public void setWarna(int warna){
         this.warna=warna;
     }
     
-         @FXML
-    private Label usernametxt;
-
-    
     @FXML
-    private Label logout,Pengaturan,Pemasukan,Pengeluaran,Laporan,Ekspor,Tentang,gantipinlbl,tambahlbl,gantiwarnalbl,edituserlbl;
-    
-    @FXML
-    private ImageView HomeImg;
-    
-    @FXML
-    private Button simpanbtn,kembalibtn;
-    
-    
-    @FXML
-    private TextField emailchangetxt,namachangetxt;
+    private TextField Kategoritxt;
     
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -75,20 +80,6 @@ public class EditUserController implements Initializable {
 
     public void setUsernametxt(String usernametxt) {
         this.usernametxt.setText(usernametxt);
-        try{
-            Connection conn=konek.conDB();
-            Statement st=conn.createStatement();
-            ResultSet rs=st.executeQuery("select * from user where username=\""+usernametxt+"\"");
-            this.emailchangetxt.setText(rs.getString("email"));
-            this.namachangetxt.setText(rs.getString("nama_lengkap"));
-            conn.close();
-            st.close();
-            rs.close();
-            
-            
-        }catch(Exception e){
-            e.printStackTrace();
-        }
     }
 
     
@@ -157,7 +148,80 @@ public class EditUserController implements Initializable {
         HomeImg.setCursor(Cursor.HAND);
     }
     
-         @FXML
+   
+     
+     
+
+    public void Mouseintambah(){
+        tambahbtn.setCursor(Cursor.HAND);
+    }
+    
+    public void MouseinKembali(){
+        kembalibtn.setCursor(Cursor.HAND);
+    }
+    
+    public void tambah(ActionEvent ae){
+        
+        String pilihan="";
+//        System.out.println(ComboPilih.getValue());
+        if(ComboPilih.getValue().toString().equalsIgnoreCase("PEMASUKAN")){
+            pilihan="PEMASUKAN";
+        }else{
+            pilihan="PENGELUARAN";
+        }
+        String sql="insert into Kategori(NamaKategori,Jenis,id_user) values('"+Kategoritxt.getText()+"','"+pilihan+"',(SELECT iduser FROM user WHERE username='"+this.usernametxt.getText()+"'))";
+        System.out.println(sql);
+        try{
+            conn = konek.conDB();
+            st = conn.createStatement();
+            st.executeUpdate(sql);
+            JOptionPane.showMessageDialog(null, "Kategori berhasil ditambahkan");
+            kembalikehome();
+            
+        }catch(Exception e){
+            e.printStackTrace();
+        }finally{
+                try{
+                rs.close();
+                st.close();
+                conn.close();
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+            }
+    }
+    
+     public void kembali(ActionEvent ae){
+        Stage stage = (Stage) kembalibtn.getScene().getWindow();
+        stage.close();
+        
+        try{
+        FXMLLoader loader=new FXMLLoader(getClass().getResource("/fxml/Pengaturan.fxml"));
+        Parent root= (Parent) loader.load();
+//                  
+        PengaturanController hm=loader.getController();
+        hm.setWarna(warna);
+//        hm.setEmailtxt(emailtxt.getText());
+//        hm.setNamatxt(namatxt.getText());
+//        hm.setSaldotxt(saldotxt.getText());
+        hm.setUsernametxt(usernametxt.getText());
+        Scene scene=new Scene(root);
+        if(warna==1){
+            scene.getStylesheets().add("/styles/biru.css");
+        }else{
+            scene.getStylesheets().add("/styles/hijau.css");
+        }
+        stage.setScene(scene);
+        stage.setTitle("Home");
+        stage.setResizable(true);
+        stage.show();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+    
+    
+     @FXML
     private void Logout() {
 
         Alert keluar = new Alert(Alert.AlertType.CONFIRMATION);
@@ -223,17 +287,27 @@ public class EditUserController implements Initializable {
             PengaturanController hm = loader.getController();
             hm.setUsernametxt(this.usernametxt.getText());
             hm.setWarna(warna);
+            hm.setSaldo(Integer.valueOf(saldosim));
             Scene scene = new Scene(root);
+            System.out.println("pengaturan warna" + warna);
             if (warna == 1) {
+                System.out.println("sini biru");
                 scene.getStylesheets().add("/styles/biru.css");
+                stage.setScene(scene);
+                stage.setTitle("Home");
+                stage.setResizable(true);
+                stage.show();
             } else {
+                System.out.println("sini hijau");
                 scene.getStylesheets().add("/styles/hijau.css");
+                stage.setScene(scene);
+                stage.setTitle("Home");
+                stage.setResizable(true);
+                stage.show();
             }
-            stage.setScene(scene);
-            stage.setTitle("Home");
-            stage.setResizable(true);
-            stage.show();
+
         } catch (Exception e) {
+
             e.printStackTrace();
             System.out.println("salah disini gan");
         }
@@ -340,7 +414,7 @@ public class EditUserController implements Initializable {
 //                  
             PengeluaranController hm = loader.getController();
             hm.setUsernametxt(this.usernametxt.getText());
-            hm.setSaldo(this.saldo);
+            hm.setSaldo(this.saldosim);
             conn = konek.conDB();
             st = conn.createStatement();
             rs = st.executeQuery("SELECT NamaKategori FROM kategori WHERE Jenis = 'PENGELUARAN' and id_user=(select iduser from user where username='" + this.usernametxt.getText() + "')");
@@ -428,81 +502,4 @@ public class EditUserController implements Initializable {
             e.printStackTrace();
         }
     }
-    public void Mouseinbutton(){
-        simpanbtn.setCursor(Cursor.HAND);
-        kembalibtn.setCursor(Cursor.HAND);
-    }
-    
-
-    public void message(String isi){
-        Alert pesan=new Alert(AlertType.INFORMATION);
-        pesan.setTitle("NOTIFICATION");
-        pesan.setContentText(isi);
-        pesan.showAndWait();
-        
-    }
-    public void simpan(ActionEvent ae){
-        String email = emailchangetxt.getText();
-        String nama = namachangetxt.getText();
-        
-        try{
-        conn=konek.conDB();
-        st=conn.createStatement();
-        int i=st.executeUpdate("Update user set nama_lengkap=\""+nama+"\",email=\""+email+"\" where username=\""+this.usernametxt.getText()+"\"");
-            System.out.println("Update user set nama_lengkap=\""+nama+"\" and email=\""+email+"\" where username=\""+this.usernametxt.getText()+"\"");
-
-            message("berhasil update");
-
-        
-        
-        
-        
-        
-                
-            
-        
-        }catch(Exception e){
-            e.printStackTrace();
-            message("gagal update");
-        }finally{
-            try{
-            conn.close();
-            st.close();
-            }catch(Exception e){
-                e.printStackTrace();
-            }
-        }
-        
-        Stage stage= (Stage) simpanbtn.getScene().getWindow();
-    }
-    
-     public void kembali(ActionEvent ae){
-        Stage stage = (Stage) kembalibtn.getScene().getWindow();
-        stage.close();
-        
-        try{
-        FXMLLoader loader=new FXMLLoader(getClass().getResource("/fxml/Pengaturan.fxml"));
-        Parent root= (Parent) loader.load();
-//                  
-        PengaturanController hm=loader.getController();
-        hm.setWarna(warna);
-//        hm.setEmailtxt(emailtxt.getText());
-//        hm.setNamatxt(namatxt.getText());
-//        hm.setSaldotxt(saldotxt.getText());
-        hm.setUsernametxt(usernametxt.getText());
-        Scene scene=new Scene(root);
-        if(warna==1){
-            scene.getStylesheets().add("/styles/biru.css");
-        }else{
-            scene.getStylesheets().add("/styles/hijau.css");
-        }
-        stage.setScene(scene);
-        stage.setTitle("Home");
-        stage.setResizable(true);
-        stage.show();
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-    }
-   
 }
