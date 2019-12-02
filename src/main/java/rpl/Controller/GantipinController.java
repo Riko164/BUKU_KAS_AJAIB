@@ -493,14 +493,14 @@ public class GantipinController implements Initializable {
             System.out.println(rs.getString("pin"));
             System.out.println(passlama);
             if(!passlama.equals(rs.getString("pin"))){
-                JOptionPane.showMessageDialog(null, "PIN LAMA SALAH");
+                message("PIN lama salah");
             }else{
                 if(passbaru.equals(conpassbaru)){
                     st.executeUpdate("update user set pin='"+passbaru+"' where username='"+this.usernametxt.getText()+"'");
-                    JOptionPane.showMessageDialog(null, "Berhasil ganti pass");
+                    message("Berhasil ganti PIN");
                     kembalikehome();
                 }else{
-                    JOptionPane.showMessageDialog(null, "PIN TIDAK SAMA");
+                    message("PIN tidak sama");
                 }
             }
         }
@@ -537,6 +537,8 @@ public class GantipinController implements Initializable {
         passlamatxt2.setText(passlamatxt.getText());
         showlama.setVisible(false);
     }
+    
+    
     
     public void seepassbaru(){
         passbarutxt.setVisible(false);
@@ -589,6 +591,12 @@ public class GantipinController implements Initializable {
         }else{
             
         }
+    }
+    public void message(String isi) {
+        Alert pesan = new Alert(AlertType.INFORMATION);
+        pesan.setTitle("INFROMATION");
+        pesan.setContentText(isi);
+        pesan.showAndWait();
     }
     
     
