@@ -57,7 +57,12 @@ public class SigninController implements Initializable {
     public void Login(ActionEvent ae) {
         conn = konek.conDB();
         String name = usertxt.getText();
-        String pass = passtxt.getText();
+        String pass;
+        if(this.passtxt.isVisible()){
+            pass = passtxt.getText();
+        }else{
+           pass = pass2txt.getText(); 
+        }
 
         if (conn == null) {
             System.out.println("Tidak Konek ke Database");
