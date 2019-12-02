@@ -1,0 +1,23 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Dec 1, 2019, 1:21:11 PM
+    Author     : Shikimime
+*/
+
+
+.luar{
+    -fx-background-image: url("../Image/Login/bg-green@2x.png");
+    -fx-background-size: 100% 100%;
+}
+
+.kiri{
+    -fx-fill: #61f9bd;
+}
+
+.atas{
+    -fx-fill: #61f9bd;
+}
